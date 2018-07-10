@@ -49,8 +49,8 @@ class m180710_170103_create_base_tables extends Migration
      */
     public function Down()
     {
-        $this->dropTable('articles');
-        $this->dropTable('categories');
-        $this->dropTable('technologies');
+        $this->dropTable('{{%articles}}');
+        $this->dropTable('{{%categories}}');
+        $this->dropTable('{{%technologies}}');
     }
 }
