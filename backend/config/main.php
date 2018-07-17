@@ -41,6 +41,8 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '/signup' => 'account/signup',
+                '/login' => 'account/login',
             ],
         ],
     ],

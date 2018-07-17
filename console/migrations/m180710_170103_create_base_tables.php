@@ -14,7 +14,7 @@ class m180710_170103_create_base_tables extends Migration
     {
         $this->createTable('{{%technologies}}', [
             'id'                   => Schema::TYPE_PK,
-            'title'             => Schema::TYPE_STRING . '(55) NOT NULL',
+            'title'                => Schema::TYPE_STRING . '(55) NOT NULL',
             'slug'                 => Schema::TYPE_STRING . '(55) NOT NULL',
             'created_at'           => Schema::TYPE_DATETIME,
             'updated_at'           => Schema::TYPE_DATETIME,
@@ -25,8 +25,8 @@ class m180710_170103_create_base_tables extends Migration
             'title'                 => Schema::TYPE_STRING . '(55) NOT NULL',
             'technology_id'         => Schema::TYPE_INTEGER,
             'slug'                  => Schema::TYPE_STRING . '(55) NOT NULL',
-            'created_at'           => Schema::TYPE_DATETIME,
-            'updated_at'           => Schema::TYPE_DATETIME,
+            'created_at'            => Schema::TYPE_DATETIME,
+            'updated_at'            => Schema::TYPE_DATETIME,
         ]);
 
         $this->addForeignKey('fk_categories_technologies', '{{%categories}}', 'technology_id', '{{%technologies}}', 'id');
@@ -37,8 +37,8 @@ class m180710_170103_create_base_tables extends Migration
             'body'                  => Schema::TYPE_TEXT,
             'category_id'           => Schema::TYPE_INTEGER,
             'slug'                  => Schema::TYPE_STRING . '(55) NOT NULL',
-            'created_at'           => Schema::TYPE_DATETIME,
-            'updated_at'           => Schema::TYPE_DATETIME,
+            'created_at'            => Schema::TYPE_DATETIME,
+            'updated_at'            => Schema::TYPE_DATETIME,
         ]);
 
         $this->addForeignKey('fk_articles_categories', '{{%articles}}', 'category_id', '{{%categories}}', 'id');
