@@ -4,7 +4,7 @@ namespace common\models;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
-
+use yii\behaviors\TimestampBehavior;
 /**
  * This is the model class for table "articles".
  *
@@ -18,7 +18,7 @@ use yii\db\Expression;
  *
  * @property Category $category
  */
-class Article extends \yii\db\ActiveRecord
+class Article extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -45,7 +45,7 @@ class Article extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
-            [ 'class' => \yii\behaviors\TimestampBehavior::className(),
+            [ 'class' => TimestampBehavior::className(),
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
                     ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
@@ -76,5 +76,15 @@ class Article extends \yii\db\ActiveRecord
     public function getCategory()
     {
         return $this->hasOne(Category::className(), ['id' => 'category_id']);
+    }
+
+    public static function getCachedArticleBodyBySlug($slug){
+        $article = Yii::$app->cache->get('article_'.$slug);
+        if ($article === false)
+        {
+            $article = Article::find()->select(['body'])->where(['slug' => $slug])->one();
+            $article = $article->body;
+            Yii::$app->cache->set('article_'.$slug, $article, 60);
+        }
     }
 }

@@ -86,4 +86,15 @@ class Category extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Technology::className(), ['id' => 'technology_id']);
     }
+
+    public static function getCachedCategoriesListById($technology_id)
+    {
+        $categories = \Yii::$app->cache->get('categories_list_where_tech_id_'.$technology_id);
+        if ($categories === false)
+        {
+            $categories = Category::find()->with('articles')->where(['technology_id' => $technology_id])->all();
+            \Yii::$app->cache->set('categories_list_where_tech_id_'.$technology_id, $categories, 60);
+        }
+        return $categories;
+    }
 }

@@ -40,6 +40,8 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '<technology_slug:\w+>/<category_slug:\w+>/<article_slug:\w+>' => 'site/render',
+                '<technology_slug:\w+>' => 'site/index'
             ],
         ],
     ],

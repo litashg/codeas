@@ -72,4 +72,35 @@ class Technology extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Category::className(), ['technology_id' => 'id'])->with('articles');
     }
+
+    public static function getCachedTechnologyBySlug($slug){
+        $technology_id = \Yii::$app->cache->get('technology_id_by_slug_'.$slug);
+        if ($technology_id === false)
+        {
+            $technology = Technology::find()->select(['id'])->where(['slug' => $slug])->one();
+            $technology_id = $technology->id;
+            \Yii::$app->cache->set('technology_id_by_slug_'.$slug, $technology_id, 60);
+        }
+        return $technology_id;
+    }
+
+    public static function getCachedTechnologyById($technology_id){
+        $technology = \Yii::$app->cache->get('active_technology');
+        if ($technology === false)
+        {
+            $technology = Technology::findOne($technology_id);
+            \Yii::$app->cache->set('active_technology', $technology, 60);
+        }
+        return $technology;
+    }
+
+    public static function getCachedTechnologiesList(){
+        $technologies = \Yii::$app->cache->get('technologies_list');
+        if ($technologies === false)
+        {
+            $technologies = Technology::find()->select(['id', 'title', 'slug'])->asArray()->all();
+            \Yii::$app->cache->set('technologies_list', $technologies, 60);
+        }
+        return $technologies;
+    }
 }
