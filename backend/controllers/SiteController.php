@@ -36,6 +36,12 @@ class SiteController extends Controller
         ];
     }
 
+    public function beforeAction($action)
+    {
+        $this->layout = Yii::$app->user->isGuest ? 'login' : 'main';
+        return parent::beforeAction($action);
+    }
+
     /**
      * {@inheritdoc}
      */

@@ -30,7 +30,7 @@ class RbacController extends Controller
         $banned_user->description = 'Banned user';
         Yii::$app->authManager->add($banned_user);
 
-        echo "Roles created";
+        echo "Roles created\n";
         exit();
     }
 
